@@ -1,0 +1,406 @@
+/*@charset "gb2312";*/
+/**Copyright 2007 Qietu Inc. All rights reserved.
+ * 网站地址: http://www.qietu.com
+ * ----------------------------------------------------------------------------
+
+ html{-webkit-text-size-adjust:none; /*解决chrome浏览器下字体不能小于12px*/}
+ body{ color:#000000; font-family:Verdana, Arial, Helvetica, sans-serif;}
+ * {}
+a{outline:none; text-decoration:none;} a:hover{ text-decoration:underline;}
+html{zoom:1;}html *{outline:0;zoom:1;} html button::-moz-focus-inner{border-color:transparent!important;} 
+body{overflow-x: hidden; font-size:12px;} body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;} table{/*border-collapse:collapse;border-spacing:0;*/} fieldset,a img{border:0;} address,caption,cite,code,dfn,em,th,var{font-style:normal;font-weight:normal;} li{list-style:none;} caption,th{text-align:left;} h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;} q:before,q:after{content:'';}
+input[type="submit"], input[type="reset"], input[type="button"], button { -webkit-appearance: none; /*去掉苹果的默认UI来渲染按钮*/} em,i{ font-style:normal;}
+
+
+
+/**
+ +------------------------------------------------------------------------------
+ * Public Class
+ +------------------------------------------------------------------------------
+ * @subpackage  RBAC
+ +------------------------------------------------------------------------------
+ */
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden; }.clearfix {display:block;}.clear{ clear:both;}/* 清除浮动*/
+.colwrapper { overflow:hidden; zoom:1 /*for ie*/; margin:5px auto; }/* 高度自适应 */ 
+.strong{ font-weight: bold;} .left{ float: left;} .right{ float: right;} .center{ margin:0 auto; text-align:center;}
+.show{ display:block; visibility:visible;}.hide{ display: none; visibility:hidden;}
+.block{ display:block;} .inline{ display:inline;}
+.transparent{filter:alpha(opacity=50); -moz-opacity:0.5;/** Firefox 3.5即将原生支持opacity属性，所以本条属性只在Firefox3以下版本有效 ***/ -khtml-opacity: 0.5; opacity: 0.5; } .break{ word-wrap:break-word;overflow:hidden; /*word-break:break-all;*/}
+
+.tal{ text-align:left} .tar{ text-align:right;}
+
+/*文字两侧对齐*/
+.justify {
+	text-align:justify;
+	text-justify:distribute-all-lines;/*ie6-8*/
+	text-align-last:justify;/* ie9*/
+	-moz-text-align-last:justify;/*ff*/
+	-webkit-text-align-last:justify;/*chrome 20+*/
+}
+
+.toe{
+	/*超出省略号*/
+	 word-break:keep-all;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0){/* chrome*/
+	.justify:after{
+		content:".";
+		display: inline-block;
+		width:100%;
+		overflow:hidden;
+		height:0;
+	}
+}
+
+/* 兼容IE6的定位属性fixed，固定不动样式 */
+.fixed{
+	position:fixed; 
+	clip:rect(0 100% 100% 0);
+	_position:absolute;
+	
+	/* 底部 */
+	bottom:0px;
+	left:0px;
+	_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);
+	/*_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);*/
+	
+	/* 左侧 */
+	/*left:0px;*/
+	/*_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);*/
+	/*_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);*/
+}
+/* 解决固定层在IE6下闪的问题 */
+*html{
+	background-image:url(about:blank);
+	background-attachment:fixed;
+}
+
+
+/*png图片ie6下透明滤镜实现写法*/
+.pngimg{filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='images/x.png');}
+
+/**
+ +------------------------------------------------------------------------------
+ * FCK 兼容解决方案
+ +------------------------------------------------------------------------------
+ * @subpackage  RBAC
+ +------------------------------------------------------------------------------
+ */
+em{ font-style:italic !important;} strike{ text-decoration:line-through !important;} strong{ font-weight:bold !important;} u{ text-decoration:underline !important;}
+
+/**
+ +------------------------------------------------------------------------------
+ * 表单样式
+ +------------------------------------------------------------------------------
+ * @subpackage  RBAC
+ +------------------------------------------------------------------------------
+ */
+
+/**
+ +------------------------------------------------------------------------------
+ * 网站整体颜色总汇
+ +------------------------------------------------------------------------------
+ * @codex  颜色:使用颜色的名称或者16进制代码,如 
+ * @subpackage  RBAC
+ +------------------------------------------------------------------------------
+ */
+.ff8600,ff86aa a{ color:#ff8600;}
+
+/**
+ +------------------------------------------------------------------------------
+ * 网站整字体大小
+ +------------------------------------------------------------------------------
+ * @codex   字体大小,直接使用"font+字体大小"作为名称,如
+ * @package  ORG
+ * @subpackage  RBAC
+ +------------------------------------------------------------------------------
+ */
+.font14px{ font-size:14px;}
+.font9pt{ font-size:9pt;}
+/*自定义字体*/
+/* @font-face {  font-family: danley;  src: url('../font/danley.ttf');  }  .danley {  font-family: danley; } */
+
+
+/**
+ +------------------------------------------------------------------------------
+ * 网站整布局命名规范
+ +------------------------------------------------------------------------------
+ * @codex   id和class命名采用该版块的英文单词或组合命名 如:newRelease
+ * @package  ORG
+ * @subpackage  RBAC
+ +------------------------------------------------------------------------------
+ */
+ body{font-family: "Microsoft YaHei",sans-serif;}
+ 
+ .css3{
+ 	/*transition: all 0.3s ease-in-out 0s;*/
+	
+	-webkit-transform:translate3d(0, -20px, 0);
+	-ms-transform:translate3d(0, -20px, 0);
+	transform:translate3d(0, -20px, 0);
+	
+	-webkit-transition-property:opacity, -webkit-transform;
+	transition-property:opacity, transform;
+	-webkit-transition-duration:1000ms;
+	transition-duration:1000ms;
+	-webkit-transition-timing-function:cubic-bezier(0.25, 0.46, 0.33, 0.98);
+	transition-timing-function:cubic-bezier(0.25, 0.46, 0.33, 0.98);
+	
+	-webkit-transition-delay:800ms;
+	transition-delay:800ms
+}
+.css3.animated{
+	-webkit-transform:translate3d(0, 0, 0);
+	-ms-transform:translate3d(0, 0, 0);
+	transform:translate3d(0, 0, 0);
+}
+ 
+@media screen and (max-width: 650px) {    
+  
+  }
+  
+  @media screen and (max-width: 480px) {   
+	 
+  }
+.rotate
+{
+transform:rotate(7deg);
+-ms-transform:rotate(7deg); 	/* IE 9 */
+-moz-transform:rotate(7deg); 	/* Firefox */
+-webkit-transform:rotate(7deg); /* Safari 和 Chrome */
+-o-transform:rotate(7deg); 	/* Opera */
+}
+
+body{
+	-webkit-text-size-adjust:none; /*禁止苹果对部分字体放大处理bug*/
+}
+
+
+.layout{
+	background: url(../imgs/bg.jpg) repeat;
+	width: 750px;margin: 0 auto;
+}
+/*锤子游戏界面*/
+.page-game{
+	padding-bottom: 75px;
+}
+.page-game .logo{
+	padding: 25px 0 0 30px;
+}
+.page-game .logo2{
+	margin-top: 50px;text-align: center;
+}
+.page-game .list{
+	margin-top: 65px;margin-left: 145px;
+}
+.page-game .list ul{
+	height: auto;overflow: hidden;
+}
+.page-game .list li{
+	float: left;position: relative; width: 170px;
+	height: 200px;margin-right: 120px;
+}
+.page-game .list li .hammer{
+	position: absolute; left: 30px; top: 30px;
+	width: 159px; height: 145px;
+	transition: all 1s;
+	-webkit-transition: all 1s;
+	-moz-transition: all 1s;
+	-o-transition: all 1s;
+	-ms-transition: all 1s;
+/*	透明度*/
+	opacity: 0;
+	transform: rotate(60deg);
+	
+}
+.page-game .list li .line{
+	position: absolute; left: 0px; top: 0px;
+	/*css3*/
+	transition: all 1s;
+	-webkit-transition: all 1s;
+	-moz-transition: all 1s;
+	-o-transition: all 1s;
+	-ms-transition: all 1s;
+	
+	/*放大缩小*/
+	transform: scale(0);
+	transition-delay: 1s;
+	
+}
+/*selected*/
+.page-game .list li.selected .line{
+	transform: scale(1);
+}
+.page-game .list li.selected .hammer{
+	opacity: 1 ;transform: rotate(30deg);
+}
+.page-game .btn-wrap{
+	margin-top: 40px; text-align: center; margin: 0 auto;
+	position: relative;
+}
+.page-game .btn{
+	font-size: 36px;color: #fff;text-align: center;
+	line-height: 90px;height: 90px;width: 480px;background: #f39800;border-radius: 10px;
+	padding: 30px 185px;
+}
+.page-game .btn-wrap p{
+	position: absolute; top: 110px;left: 230px;
+	font-size: 20px;color: #f5ab40;
+	
+}
+.page-game .rule{
+	margin-top: 120px;margin-left: 55px;
+}
+.page-game .rule li{
+	margin-bottom: 70px;
+}
+.page-game .rule li h2{
+	font-size: 30px;color: #f5ab40;
+	
+}
+.page-game .rule li dl{
+	margin-top: 45px;
+}
+.page-game .rule li dd{
+	font-size: 24px; color: #fad372;margin-top: 5px;
+}
+
+.page-game .rule span{
+	font-size: 20px; color: #f4ba66;margin-left: 80px;
+}
+.page-game .foot {
+	margin-top: 80px;text-align: center;font-size: 20px;
+	color: #f7bb55; 
+}
+
+.page-game .mask p{
+	line-height: 215px;
+}
+.mask{
+	position: fixed; left: 50%;margin-left:-375px;
+	top: -100%;height:100%;background: rgba(0,0,0,0.8);width: 750px;
+	transition: all 0.5s;
+	-webkit-transition: all 1s;
+	-moz-transition: all 1s;
+	-o-transition: all 1s;
+	-ms-transition: all 1s;	
+}
+.mask.on{
+	top: 0;
+}
+.dialog{ 			
+	width: 500px; background: #fff799;font-size: 28px;
+	border-radius: 10px;position: fixed; left: 50%; margin-left: -250px;
+	top: 30%;overflow:hidden;
+	
+	transition: all 0.5s;
+	-webkit-transition: all 1s;
+	-moz-transition: all 0.5s;
+	-o-transition: all 1s;
+	-ms-transition: all 1s;
+	transform: scale(0);
+}
+.dialog.on{
+	transform: scale(1);
+}
+.dialog .body{
+	padding: 70px 60px;
+	
+}
+.dialog .foot{
+	background: #f5ab40;height: 90px;font-size: 36px;
+	line-height: 90px;text-align: center;color: #fff;
+}
+.dialog .foot a{
+	color: #fff;
+}
+
+
+/*page2*/
+.page2{
+	background: url(../imgs/bg.png) repeat ;width: 750px;
+	margin: 0 auto;overflow: hidden;
+}
+.page2 .logo{
+	margin-top: 105px;text-align: center;
+}
+.page2 .logo2{
+	margin-top: 90px;text-align: center;
+}
+.page2 .txt{
+	margin-top: 50px;text-align: center;
+}
+.page2 .txt h3{
+	font-size: 20px;color: #f39800;line-height: 1;
+}
+.page2 .txt h2{
+	font-size:28px;color: #f39800;line-height: 1;
+	margin-top: 35px;
+}
+.page2 .input{
+	margin-top: 20px;
+	border-radius: 5px;
+	margin-left:75px;position: relative;
+}
+.page2 .input .in1 input{
+	height: 90px; width: 600px;background: #fff;
+	border: none;font-size: 28px;border-radius: 5px;
+	border-bottom: 1px solid #e6e6e6;
+}
+.page2 .input .in2 input{
+	height: 90px; width: 600px;background: #fff;
+	border: none;font-size: 28px;
+}
+.page2 .input .paword{
+	position: absolute;
+	text-align: center;
+	bottom: 0;right: 75px;
+}
+.page2 .input .paword a{
+	color: #f39800;font-size:28px; line-height: 90px;
+	padding: 30px 30px;
+}
+.page2 .input .paword em{
+	height: 35px;width: 5px;background: #f39800;position: absolute;
+	right: 200px;bottom: 25px;border-radius: 2px;
+}
+.page2 .btn{
+	
+	text-align: center;
+	margin: 0 auto;
+	margin-bottom: 90px;
+}
+.page2 .btn{
+	margin-top: 70px;
+}
+.page2 .btn a{
+	color: #fff;font-size:28px;
+	background: #f39800;padding: 30px 245px;
+	border-radius: 5px;display: inline;
+}
+
+
+
+
+
+.page-down{
+	width: 750px;background: url(../imgs/bg.jpg) repeat;
+	overflow: hidden;text-align: center;
+}
+.page-down .logo{
+	margin-top: 275px;
+}
+.page-down .btn{
+	margin-top: 255px;height: 90px;
+}
+.page-down .btn a{
+	font-size: 28px;color: #fff;background: #f39800;
+	padding: 30px 150px;border-radius: 10px;
+}
+.page-down .tip{
+	margin-top: 20px;font-size: 20px; color: #f39800;
+	margin-bottom: 290px;
+}
